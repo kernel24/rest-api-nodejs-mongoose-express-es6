@@ -3,9 +3,14 @@ import User from '../models/user'
 import Preferences from '../models/preferences'
 const router = express.Router(Preferences)
 
+/* You should call /users/:user_id for login for test */
+
 /* GET user preferences. */
-router.get('/:user_id', async function(req, res, user) {
-    var user = await User.findOne({user_id:req.params.user_id})
+router.get('/', async function(req, res, user) {
+    if(typeof req.session.sess_id === 'undefined')
+      return res.status(403).json({error: "not logged in"})
+
+    var user = await User.findOne({_id:req.session.sess_id})
     if (!user) return res.status(404).json({error: 'user not found'})
     var preferences = await Preferences.findOne({user: user})
     if (!preferences) return res.status(404).json({error: 'preferences not found'});
@@ -13,10 +18,14 @@ router.get('/:user_id', async function(req, res, user) {
 })
 
 /* CREATE user preferences. */
-router.post('/:user_id', async function(req, res, next) {
-    var user = await User.findOne({user_id: req.params.user_id})
+router.post('/', async function(req, res, next) {
+    console.log(req.session.sess_id)
+
+    if(typeof req.session.sess_id === 'undefined')
+      return res.status(403).json({error: "not logged in"})
+
+    var user = await User.findOne({_id: req.session.sess_id})
     if (!user) return res.status(404).json({error: 'user not found'})
-    console.log(req.body);
     var preferences = await Preferences.findOne({user: user})
     if (preferences) preferences = await Preferences.update({user: user}, {$set: req.body})
     else {
@@ -29,8 +38,11 @@ router.post('/:user_id', async function(req, res, next) {
 })
 
 /* Update user preferences. */
-router.put('/:user_id', async function(req, res, next) {
-    var user = await User.findOne({user_id: req.params.user_id})
+router.put('/', async function(req, res, next) {
+    if(typeof req.session.sess_id === 'undefined')
+      return res.status(403).json({error: "not logged in"})
+
+    var user = await User.findOne({_id: req.session.sess_id})
     if (!user) return res.status(404).json({error: 'user not found'})
     var preferences = await Preferences.findOne({user: user})
     if (!preferences) return res.status(404).json({error: 'preferences not found'})
@@ -39,8 +51,11 @@ router.put('/:user_id', async function(req, res, next) {
 });
 
 /* Delete user preferences. */
-router.delete('/:user_id', async function(req, res, next) {
-    var user = await User.findOne({user_id: req.params.user_id})
+router.delete('/', async function(req, res, next) {
+    if(typeof req.session.sess_id === 'undefined')
+      return res.status(403).json({error: "not logged in"})
+
+    var user = await User.findOne({_id: req.session.sess_id})
     if (!user) return res.status(404).json({error: 'user not found'})
     var preferences = await Preferences.remove({user: user})
     res.status(204).end()

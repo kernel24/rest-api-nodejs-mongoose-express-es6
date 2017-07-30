@@ -1,9 +1,12 @@
 import request from 'supertest'
-import { expect } from 'chai'
+import chai from 'chai'
 
 import app from '../app';
 
+var expect = chai.expect
+
 var user_id
+var cookies
 
 describe('POST /users', () => {
   it('should respond with creating user', (done) => {
@@ -30,12 +33,12 @@ describe('POST /users', () => {
   })
 })
 
-describe('GET /users/', () => {
+describe('GET /users/:user_id', () => {
   it('should respond with specific user', (done) => {
     request(app)
       .get('/users/'+user_id)
       .expect(200)
-      .end((err, res) => {
+      .end((err, res, req) => {
         if (err) {
           done(err)
           return
@@ -46,15 +49,18 @@ describe('GET /users/', () => {
         expect(res.body.user_id).to.equal(user_id)
         expect(res.body.user_name).to.equal('jaekyun jung')
         expect(res.body.location).to.equal('korea')
+
+        cookies = res.headers['set-cookie'].pop().split(';')[0]
         done()
       })
   })
 })
 
-describe('POST /prefrences/:user_id', () => {
+describe('POST /prefrences/', () => {
   it('should respond with creating preferences', (done) => {
-    request(app)
-      .post('/preferences/'+user_id)
+    var req = request(app).post('/preferences/')
+    req.cookies = cookies
+    req
       .send({
         "content": {
           "category_lists": 0
@@ -85,10 +91,11 @@ describe('POST /prefrences/:user_id', () => {
   })
 })
 
-describe('PUT /prefrences/:user_id', () => {
+describe('PUT /prefrences/', () => {
   it('should respond with creating preferences', (done) => {
-    request(app)
-      .put('/preferences/'+user_id)
+    var req = request(app).put('/preferences/')
+    req.cookies = cookies
+    req
       .send({
         "content": {
           "category_lists": 1
@@ -119,10 +126,11 @@ describe('PUT /prefrences/:user_id', () => {
   })
 })
 
-describe('GET /preferences/:user_id', () => {
+describe('GET /preferences/', () => {
   it('should respond with specific preferences along with user', (done) => {
-    request(app)
-      .get('/preferences/'+user_id)
+    var req = request(app).get('/preferences/')
+    req.cookies = cookies
+    req
       .expect(200)
       .end((err, res) => {
         if (err) {
@@ -144,10 +152,11 @@ describe('GET /preferences/:user_id', () => {
   })
 })
 
-describe('DELETE /preferences/:user_id', () => {
+describe('DELETE /preferences/', () => {
   it('should respond with removing preferences about user', (done) => {
-    request(app)
-      .delete('/preferences/'+user_id)
+    var req = request(app).delete('/preferences/')
+    req.cookies = cookies
+    req
       .expect(204)
       .end((err, res) => {
         if (err) {
@@ -163,8 +172,9 @@ describe('DELETE /preferences/:user_id', () => {
 
 describe('DELETE /users', () => {
   it('should respond with removing user', (done) => {
-    request(app)
-      .delete('/users/'+user_id)
+    var req = request(app).delete('/users/')
+    req.cookies = cookies
+    req
       .expect(204)
       .end((err, res) => {
         if (err) {
