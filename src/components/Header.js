@@ -11,10 +11,10 @@ export default class Header extends React.Component {
 
           <nav className="header z-depth-1">
               <div className="navbar-fixed">
-                  <ul className="input-field left">
+                  <ul className="input-field col s3 left">
                     <i className="material-icons md-24 md-dark prefix">search</i>
                     <input id="search" type="text" className="validate" />
-                    <label htmlFor="search">Search</label>
+                    <label htmlFor="search" className="left   ">Search</label>
                   </ul>
 
                   <a href="" className="center logo prefix">FANCY</a>

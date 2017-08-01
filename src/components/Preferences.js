@@ -2,6 +2,7 @@ import React  from 'react'
 import { Link } from 'react-router'
 
 const API_URL = 'http://localhost:8080/'
+const USERID = 4
 
 class Preferences extends React.Component {
   constructor() {
@@ -16,6 +17,14 @@ class Preferences extends React.Component {
     }
     this.updateValue = this.updateValue.bind(this)
     this.saveValue = this.saveValue.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.getInitialState()
+  }
+
+  getInitialState() {
+    return {
+        done: false
+    }
   }
 
   updateValue(){
@@ -67,7 +76,7 @@ class Preferences extends React.Component {
 
       }
 
-      fetch(API_URL+'users/3', fetchData)
+      fetch(API_URL+'users/'+USERID, fetchData)
       .then((response) => response.json())
       .then((responseData) => {
           console.log(responseData)
@@ -75,6 +84,23 @@ class Preferences extends React.Component {
           this.updateValue()
       })
 
+    }
+
+    handleChange(event) {
+      console.log(event.target.name+" "+event.target.value)
+
+      if(event.target.name === 'languange')
+        this.state.localization.language = event.target.value
+      if(event.target.name === 'time_zone')
+        this.state.localization.time_zone = event.target.value
+      if(event.target.name === 'currency')
+        this.state.localization.currency = event.target.value
+      if(event.target.name === 'profile_visibility')
+        this.state.privacy.profile_visibility = event.target.value
+      if(event.target.name === 'messages')
+        this.state.privacy.messages = event.target.value
+      if(event.target.name === 'category_lists')
+        this.state.content.category_lists = event.target.value
     }
 
     render() {
@@ -90,29 +116,29 @@ class Preferences extends React.Component {
                      <div className="col s6">
                         <p />
                         <div className="content-font">Language</div>
-                        <select className="browser-default" defaultValue={this.state.localization.language}>
-                          <option value="eng">English</option>
-                          <option value="ko">한국어</option>
-                          <option value="jp">日本語</option>
-                          <option value="zh-cn">简体中文</option>
+                        <select className="browser-default" name="languange" onChange={this.handleChange}>
+                          <option value="eng" selected={this.state.localization.language === "eng"}>English</option>
+                          <option value="ko" selected={this.state.localization.language === "ko"}>한국어</option>
+                          <option value="jp" selected={this.state.localization.language === "jp"}>日本語</option>
+                          <option value="zh-cn" selected={this.state.localization.language === "zh-cn"}>简体中文</option>
                         </select>
                         <div className="content-font">Interested in helping translate Fancy?<a href=""> Let us know.</a></div>
                         <p />
                         <div className="content-font">Time zone</div>
-                        <select className="browser-default" defaultValue={this.state.localization.time_zone}>
-                          <option value="America/Los_Angeles">(UTC-07:00) America/Los_Angeles</option>
-                          <option value="Asia/Seoul">(UTC+09:00) Asia/Seoul</option>
-                          <option value="Asia/Tokyo">(UTC+09:00) Asia/Tokyo</option>
-                          <option value="Indian/Cocos">(UTC+06:30) Indian/Cocos</option>
+                        <select className="browser-default" name="time_zone" onChange={this.handleChange}>
+                          <option value="America/Los_Angeles" selected={this.state.localization.time_zone === "America/Los_Angeles"}>(UTC-07:00) America/Los_Angeles</option>
+                          <option value="Asia/Seoul" selected={this.state.localization.time_zone === "Asia/Seoul"}>(UTC+09:00) Asia/Seoul</option>
+                          <option value="Asia/Tokyo" selected={this.state.localization.time_zone === "Asia/Tokyo"}>(UTC+09:00) Asia/Tokyo</option>
+                          <option value="Indian/Cocos" selected={this.state.localization.time_zone === "Indian/Cocos"}>(UTC+06:30) Indian/Cocos</option>
                         </select>
                         <p />
 
                         <div className="content-font">Currency</div>
-                        <select className="browser-default" defaultValue={this.state.localization.currency}>
-                          <option value="EUR">Euros (€)</option>
-                          <option value="USD">U.S. dollars ($)</option>
-                          <option value="KRW">South Korean won (₩)</option>
-                          <option value="JPY">Japanese yen (¥)</option>
+                        <select className="browser-default" name="currency" onChange={this.handleChange}>
+                          <option value="EUR" selected={this.state.localization.currency === "EUR"}>Euros (€)</option>
+                          <option value="USD" selected={this.state.localization.currency === "USD"}>U.S. dollars ($)</option>
+                          <option value="KRW" selected={this.state.localization.currency === "KRW"}>South Korean won (₩)</option>
+                          <option value="JPY" selected={this.state.localization.currency === "JPY"}>Japanese yen (¥)</option>
                         </select>
 
                      </div>
@@ -134,15 +160,15 @@ class Preferences extends React.Component {
                         <div className="content-font">Manage who can see your activity, things you fancy, your followers, people you follow or in anyone’s search results.</div>
 
                         <p/>
-                        <div className="row">
+                        <div className="row" onChange={this.handleChange}>
                             <div className="col s3">
-                              <input className="with-gap" name="group1" type="radio" id="everyone" defaultChecked={this.state.privacy.profile_visibility === 0} />
-                              <label htmlFor="everyone" className="content-font">Everyone</label>
+                              <input className="with-gap" name="profile_visibility" type="radio" id="profile_visibility_everyone" value="0" defaultChecked={this.state.privacy.profile_visibility == 0} />
+                              <label htmlFor="profile_visibility_everyone" className="content-font">Everyone</label>
                             </div>
 
                             <div className="col s9">
-                              <input className="with-gap" name="group1" type="radio" id="private" defaultChecked={this.state.privacy.profile_visibility === 1} />
-                              <label htmlFor="private"><i className="material-icons md-dark">lock</i> Private</label>
+                              <input className="with-gap" name="profile_visibility" type="radio" id="profile_visibility_private" value="1" defaultChecked={this.state.privacy.profile_visibility == 1} />
+                              <label htmlFor="profile_visibility_private"><i className="material-icons md-dark">lock</i> Private</label>
                             </div>
                         </div>
                         <p/>
@@ -150,18 +176,18 @@ class Preferences extends React.Component {
                         <div className="content-font">Messages</div>
                         <div className="content-font">Control who can send you messages.</div>
                         <p/>
-                        <div className="row">
+                        <div className="row" onChange={this.handleChange}>
                             <div className="col s3">
-                              <input className="with-gap" name="group2" type="radio" id="everyone" defaultChecked={this.state.privacy.messages == "0"}/>
-                              <label htmlFor="everyone" className="content-font">Everyone</label>
+                              <input className="with-gap" name="messages" type="radio" id="messages_everyone" value='0' defaultChecked={this.state.privacy.messages == 0} />
+                              <label htmlFor="messages_everyone" className="content-font">Everyone</label>
                             </div>
                             <div className="col s4">
-                              <input className="with-gap" name="group2" type="radio" id="people" defaultChecked={this.state.privacy.messages == "1"}/>
-                              <label htmlFor="people" className="content-font">People you follow</label>
+                              <input className="with-gap" name="messages" type="radio" id="messages_people" value='1' defaultChecked={this.state.privacy.messages == 1} />
+                              <label htmlFor="messages_people" className="content-font">People you follow</label>
                             </div>
                             <div className="col s5">
-                              <input className="with-gap" name="group2" type="radio" id="nobody"  defaultChecked={this.state.privacy.messages == "2"}/>
-                              <label htmlFor="nobody"><i className="material-icons md-dark">lock</i>No one</label>
+                              <input className="with-gap" name="messages" type="radio" id="messages_nobody" value='2'  defaultChecked={this.state.privacy.messages == 2} />
+                              <label htmlFor="messages_nobody"><i className="material-icons md-dark">lock</i>No one</label>
                             </div>
                         </div>
                         <p/><p/><p/>
@@ -182,14 +208,14 @@ class Preferences extends React.Component {
                         <div className="content-font">Category lists</div>
                         <div className="content-font">Automatically add Fancy items to the Category list</div>
                         <p/>
-                        <div className="row">
+                        <div className="row" onChange={this.handleChange}>
                             <div className="col s3">
-                              <input className="with-gap" name="group3" type="radio" id="enable" defaultChecked={this.state.content.category_lists === 0} />
-                              <label htmlFor="enable" className="content-font">Enable</label>
+                              <input className="with-gap" name="category_lists" type="radio" id="category_lists_enable" value="1" defaultChecked={this.state.content.category_lists == 0} />
+                              <label htmlFor="category_lists_enable" className="content-font">Enable</label>
                             </div>
                             <div className="col s9">
-                              <input className="with-gap" name="group3" type="radio" id="disable" defaultChecked={this.state.content.category_lists === 1} />
-                              <label htmlFor="disable">Disable</label>
+                              <input className="with-gap" name="category_lists" type="radio" id="category_lists_disable" value="0" defaultChecked={this.state.content.category_lists == 1} />
+                              <label htmlFor="category_lists_disable">Disable</label>
                             </div>
                         </div>
                       </div>
