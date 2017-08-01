@@ -23,12 +23,24 @@ $ npm start
 ```
 ###### ... todo
 
-* create the page with react.
+* create the page with updating preferences using react
 * pure es6/7
-* user session handling
 * Add basic front-end test
-* Use a bundler such as webpack 2
+
+###### ... issues
+
+* change font, material icon, logo color
+* fix preventing from overlapping header when scrolling up
+* customize material design scheme
 
 ###### ... reference
+* node.js+mongoose+es6: TBD
+* mocha+chai+supertest: TBD
+* express-session: TBD
+* pure es6/7: TBD
+* react: TBD
+* font-awesome: http://fontawesome.io/3.2.1/examples/
+* materialize: http://materializecss.com/
+* google font: https://fonts.google.com/
 
 ###### ... recap
