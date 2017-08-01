@@ -1,9 +1,6 @@
 import request from 'supertest'
-import chai from 'chai'
-
+import { expect } from 'chai'
 import app from '../app';
-
-var expect = chai.expect
 
 var user_id
 var cookies

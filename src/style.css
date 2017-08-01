@@ -1,0 +1,112 @@
+body {
+  background: #ebeced;
+}
+
+.header {
+  background: #fff;
+  border: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  text-align: center;
+  overflow: visible;
+  padding: 5px 80px 0px 80px;
+}
+
+.logo {
+  font-size: 36px;
+  font-family: 'NTR', sans-serif;
+  font-style: normal;
+  font-weight: italic;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.77);
+  padding: 10px 0px 0px 0px;
+}
+
+.sidebar {
+  background: #fff;
+  border: 1;
+  top: 70px;
+  left: 30px;
+  height: 430px;
+  width: 250px;
+  /*padding: 5px 0px 0px 30px;*/
+}
+
+.sidebar-font .header-font {
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: italic;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.77);
+}
+
+.content {
+  background: #fff;
+  position: absolute;
+  top: 75px;
+  left: 300px;
+  right: 0;
+  height: 100%;
+  width: 800px;
+  padding: 10px 0px 0px 30px;
+}
+
+.footer {
+  background: #fff;
+  position: fixed;
+  top: 90%;
+  left: 300px;
+  right: 0;
+  height: 10%;
+  width: 800px;
+  padding: 30px 30px 0px 0px;
+}
+
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+
+  /* issue: https://github.com/google/material-design-icons/issues/206
+  */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
