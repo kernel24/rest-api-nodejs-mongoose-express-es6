@@ -23,22 +23,19 @@ $ npm start
 ```
 ###### ... todo
 
-* create the page with updating preferences using react
-* pure es6/7
 * Add basic front-end test
+* Add install script for mongo DB
 
 ###### ... issues
 
-* change font, material icon, logo color
-* fix preventing from overlapping header when scrolling up
-* customize material design scheme
+* fix default checked not working
 
 ###### ... reference
 * node.js+mongoose+es6: TBD
 * mocha+chai+supertest: TBD
-* express-session: TBD
-* pure es6/7: TBD
-* react: TBD
+* express-session: https://github.com/expressjs/session
+* pure es6/7 check: http://es6-features.org/#Constants
+* react: https://facebook.github.io/react/docs/rendering-elements.html
 * font-awesome: http://fontawesome.io/3.2.1/examples/
 * materialize: http://materializecss.com/
 * google font: https://fonts.google.com/
