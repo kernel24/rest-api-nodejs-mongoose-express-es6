@@ -10,7 +10,7 @@ export default class Sidebar extends Component {
           <div className="sidebar collection">
             <ul>
                 <li><a className="collection-item sidebar-font"><i className="material-icons">account_circle</i>&nbsp; Edit Profile</a></li>
-                <li><a className="collection-item active sidebar-font"><i className="material-icons">settings</i>&nbsp; Preferences</a></li>
+                <li><a className="collection-item sidebar-font"><i className="material-icons">settings</i>&nbsp; Preferences</a></li>
                 <li><a className="collection-item sidebar-font"><i className="material-icons">lock</i>&nbsp; Password</a></li>
                 <li><a className="collection-item sidebar-font"><i className="material-icons">notifications</i>&nbsp; Notification</a></li>
                 <li><a className="collection-item sidebar-font"><i className="material-icons">supervisor_account</i>&nbsp;  Connected Accounts</a></li>

@@ -27,7 +27,10 @@ router.post('/', async function(req, res, next) {
     var user = await User.findOne({_id: req.session.sess_id})
     if (!user) return res.status(404).json({error: 'user not found'})
     var preferences = await Preferences.findOne({user: user})
-    if (preferences) preferences = await Preferences.update({user: user}, {$set: req.body})
+    if (preferences) {
+      preferences = await Preferences.update({user: user}, {$set: req.body})
+      return res.json({message: 'Preferences successfully updated!'});
+    }
     else {
       preferences = new Preferences(req.body);
       console.log(preferences);

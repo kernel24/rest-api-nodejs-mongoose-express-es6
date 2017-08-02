@@ -13,16 +13,17 @@ body {
   text-align: center;
   overflow: visible;
   padding: 5px 80px 0px 80px;
+  z-index: 1000;
 }
 
-.logo {
+.brand-logo {
   height: 64px;
   font-size: 36px;
   font-family: 'NTR', sans-serif;
   font-style: normal;
   font-weight: italic;
   text-align: center;
-  color: rgba(0, 0, 0, 0.77);
+  color: rgba(0, 0, 0, 0.77) !important;
   padding: 10px 0px 0px 0px;
 }
 
@@ -36,7 +37,7 @@ body {
   /*padding: 5px 0px 0px 30px;*/
 }
 
-.sidebar-font .header-font .content-font {
+.sidebar-font {
   font-size: 14px;
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
@@ -48,7 +49,7 @@ body {
 .content {
   background: #fff;
   position: absolute;
-  border: 1;
+  border: 1px solid rgba(0, 0, 0, 0.13) !important;
   top: 75px;
   left: 300px;
   right: 0;
@@ -61,10 +62,10 @@ body {
   background: #fff;
   position: fixed;
   top: 90%;
-  left: 300px;
+  left: 301px;
   right: 0;
   height: 10%;
-  width: 800px;
+  width: 798px;
   padding: 30px 30px 0px 0px;
 }
 
@@ -97,6 +98,27 @@ body {
   align-items: center;
   justify-content: center;
   vertical-align: middle;
+}
+
+.collection-item {
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+
+[type="radio"].with-gap:checked + label:before {
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.54) !important;
+}
+
+[type="radio"].with-gap:checked + label:after {
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.54) !important;
+  background-color: rgba(0, 0, 0, 0.54) !important;
+  z-index: 0;
+  -webkit-transform: scale(.5);
+  -moz-transform: scale(.5);
+  -ms-transform: scale(.5);
+  -o-transform: scale(.5);
+  transform: scale(.5);
 }
 
 /* Rules for sizing the icon. */
