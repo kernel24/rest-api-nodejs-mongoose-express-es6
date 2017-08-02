@@ -37,15 +37,6 @@ body {
   /*padding: 5px 0px 0px 30px;*/
 }
 
-.sidebar-font {
-  font-size: 14px;
-  font-family: 'Open Sans', sans-serif;
-  font-style: normal;
-  font-weight: italic;
-  text-align: left;
-  color: rgba(0, 0, 0, 0.77);
-}
-
 .content {
   background: #fff;
   position: absolute;
@@ -69,6 +60,67 @@ body {
   padding: 30px 30px 0px 0px;
 }
 
+.sidebar-font {
+  font-size: 12px;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: italic;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.77);
+}
+
+.btn-font {
+  font-size: 16px;
+  font-family: 'NTR', sans-serif;
+  text-transform: capitalize;
+  font-style: normal;
+  font-weight: italic;
+  text-align: left;
+}
+
+.content-font {
+  font-size: 12px;
+  text-transform: capitalize;
+  font-family: 'Quicksand', sans-serif;
+  font-style: normal;
+  font-weight: italic;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.26);
+}
+
+.content-font-bold {
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 900;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.61);
+}
+
+.content-font-head {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: bold;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.77);
+}
+
+.content-font-radio {
+  font-size: 11px;
+  font-family: 'Quicksand', sans-serif;
+  font-style: normal;
+  font-weight: italic;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.66);
+}
+
+.content-font-title {
+  font-size: 15px;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: italic;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.61);
+}
 
 .material-icons {
   font-family: 'Material Icons';
@@ -104,15 +156,19 @@ body {
   color: rgba(0, 0, 0, 0.54) !important;
 }
 
+.collection .collection-item.active {
+    background-color: rgba(0, 0, 0, 0.11) !important;
+}
+
 [type="radio"].with-gap:checked + label:before {
   border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0.54) !important;
+  border: 2px solid #0288d1 !important;
 }
 
 [type="radio"].with-gap:checked + label:after {
   border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0.54) !important;
-  background-color: rgba(0, 0, 0, 0.54) !important;
+  border: 2px solid #0288d1 !important;
+  background-color: #0288d1 !important;
   z-index: 0;
   -webkit-transform: scale(.5);
   -moz-transform: scale(.5);
