@@ -19,25 +19,56 @@ This is simple CRUD for user preferences using Node.js, MongoDB and React.
 ###### ... install
 ```
 $ npm install
-$ npm start
+... for data installation and basic backend api test
+$ npm test  
+$ npm run-script start
+```
+
+## API List
+| ROUTE                     | METHOD | DESCRIPTION                        |
+|---------------------------|--------|------------------------------------|
+| /users                    | GET    | get all the users                  |
+| /users/:user_id           | GET    | get user and session info by _id   |
+| /users/                   | POST   | create user                        |
+| /users/                   | DELETE | delete user by user session        |
+| /preferences              | GET    | get preferences by user session    |
+| /preferences              | POST   | create preferences by user session |
+| /preferences              | PUT    | update preferences by user session |
+| /preferences              | DELETE | delete preferences by user session |
+
+## User and Preferences JSON Format
+```json
+{
+    "user_name": "JK Jung",
+    "location": "Seoul",
+    "content": {
+        "category_lists":"enable"
+    },
+    "privacy": {
+      "profile_visibility": "everyone",
+      "messages": "everyone"
+    },
+    "localization": {
+      "language": "한국어",
+      "time_zone": "Asia/Seoul",
+      "currency": "KRW"
+    }
+}
 ```
 ###### ... todo
 
 * Add basic front-end test
-* Add install script for mongo DB
 
 ###### ... issues
 
-* fix default checked not working
+* solved all the issues
 
 ###### ... reference
-* node.js+mongoose+es6: TBD
-* mocha+chai+supertest: TBD
+* node.js+mongoose+es6: https://velopert.com/594
+* mocha+chai+supertest: http://chaijs.com/api/bdd/  https://www.npmjs.com/package/supertest
 * express-session: https://github.com/expressjs/session
 * pure es6/7 check: http://es6-features.org/#Constants
 * react: https://facebook.github.io/react/docs/rendering-elements.html
 * font-awesome: http://fontawesome.io/3.2.1/examples/
 * materialize: http://materializecss.com/
 * google font: https://fonts.google.com/
-
-###### ... recap

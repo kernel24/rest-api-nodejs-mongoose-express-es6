@@ -28,8 +28,6 @@ const server = app.listen(app.get('port'), () => {
   console.log('Ready on port ' + server.address().port)
 })
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -48,7 +46,7 @@ db.once('open',() => {
   console.log("Conntected to mongod server")
 })
 
-var connection = mongoose.connect('mongodb://localhost/taskword',{
+var connection = mongoose.connect('mongodb://localhost/taskworld',{
     useMongoClient: true,
 });
 

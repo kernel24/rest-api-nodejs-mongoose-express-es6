@@ -1,6 +1,6 @@
 import express from 'express'
 import User from '../models/user'
-const router = express.Router(User) //require('node-async-router')();
+const router = express.Router(User)
 
 /* GET users listing. */
 router.get('/', async (req, res) => {
