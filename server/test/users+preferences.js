@@ -60,11 +60,11 @@ describe('POST /prefrences/', () => {
     req
       .send({
         "content": {
-          "category_lists": 0
+          "category_lists": 'enable'
         },
         "privacy": {
-          "profile_visibility": 0,
-          "messages": 1
+          "profile_visibility": 'everyone',
+          "messages": 'everyone'
         },
         "localization": {
           "language": "jp",
@@ -95,11 +95,11 @@ describe('PUT /prefrences/', () => {
     req
       .send({
         "content": {
-          "category_lists": 1
+          "category_lists": 'disable'
         },
         "privacy": {
-          "profile_visibility": 1,
-          "messages": 1
+          "profile_visibility": 'private',
+          "messages": 'noone'
         },
         "localization": {
           "language": "ko",
@@ -137,9 +137,9 @@ describe('GET /preferences/', () => {
         expect(res.body).has.all.keys([
           '_id','user','__v','content','privacy','localization'
         ])
-        expect(res.body.content.category_lists).to.equal(1)
-        expect(res.body.privacy.profile_visibility).to.equal(1)
-        expect(res.body.privacy.messages).to.equal(1)
+        expect(res.body.content.category_lists).to.equal('disable')
+        expect(res.body.privacy.profile_visibility).to.equal('private')
+        expect(res.body.privacy.messages).to.equal('noone')
 
         expect(res.body.localization.language).to.equal('ko')
         expect(res.body.localization.time_zone).to.equal('Asia/Seoul')

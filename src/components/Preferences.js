@@ -1,5 +1,8 @@
 import React  from 'react'
 import { Link } from 'react-router'
+import Item from './Item'
+
+import 'babel-polyfill'
 
 const API_URL = 'http://localhost:8080/'
 const USERID = 4
@@ -11,16 +14,18 @@ class Preferences extends React.Component {
     this.state = {
       'user_name':'',
       'location': '',
-      'content': {'category_lists':0},
-      'privacy': {'profile_visibility': 0, 'messages': 0},
+      'content': {'category_lists':''},
+      'privacy': {'profile_visibility': '', 'messages': ''},
       'localization': {'language': '', 'time_zone': '', 'currency': ''}
     }
+
+    this.getUserSession = this.getUserSession.bind(this)
     this.updateValue = this.updateValue.bind(this)
     this.saveValue = this.saveValue.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
-  updateValue(){
+  async updateValue(){
     const fetchData = {
         method: 'GET',
         credentials: 'include',
@@ -31,15 +36,16 @@ class Preferences extends React.Component {
 
     }
 
-    fetch(API_URL+'preferences/', fetchData)
+    await fetch(API_URL+'preferences/', fetchData)
     .then((response) => response.json())
     .then((responseData) => {
         this.setState(responseData);
         console.log(this.state)
+        if(responseData.error) alert(responseData.error+" please refresh your page.")
     })
   }
 
-  saveValue(){
+  async saveValue(){
     const fetchData = {
         method: 'POST',
         credentials: 'include',
@@ -50,61 +56,186 @@ class Preferences extends React.Component {
         body: JSON.stringify(this.state)
     }
 
-    fetch(API_URL+'preferences/', fetchData)
+    await fetch(API_URL+'preferences/', fetchData)
     .then((response) => response.json())
     .then((responseData) => {
         this.setState(responseData);
         console.log(this.state)
-        alert(responseData.message)
-    }).catch(() => {
-        var error = new Error(response.statusText)
-        error.response = response
-        alert(error.response);
-        throw error
+        if(responseData.message) alert(responseData.message)
+        if(responseData.error) alert(responseData.error+" please refresh your page.")
+    })
+  }
 
+  async getUserSession() {
+    const fetchData = {
+        method: 'GET',
+        credentials: 'include',
+        headers: new Headers({
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        })
+
+    }
+
+    await fetch(API_URL+'users/'+USERID, fetchData)
+    .then((response) => response.json())
+    .then((responseData) => {
+        console.log(responseData)
+        this.setState(responseData)
     })
   }
 
   componentDidMount() {
-      const fetchData = {
-          method: 'GET',
-          credentials: 'include',
-          headers: new Headers({
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          })
-
-      }
-
-      fetch(API_URL+'users/'+USERID, fetchData)
-      .then((response) => response.json())
-      .then((responseData) => {
-          console.log(responseData)
-          this.setState(responseData)
-          this.updateValue()
-      })
+        const fetchPreferences = async () => {
+            await this.getUserSession()
+            await this.updateValue()
+        }
+        fetchPreferences()
 
     }
 
     handleChange(event) {
       console.log("handleChange: "+event.target.name+" "+event.target.value)
-      if(event.target.name === 'languange')
+      if(event.target.name == "language")
         this.state.localization.language = event.target.value
       else if(event.target.name === 'time_zone')
         this.state.localization.time_zone = event.target.value
       else if(event.target.name === 'currency')
         this.state.localization.currency = event.target.value
       else if(event.target.name == 'profile_visibility')
-        this.state.privacy.profile_visibility = Number(event.target.value)
+        this.state.privacy.profile_visibility = event.target.value
       else if(event.target.name == 'messages')
-        this.state.privacy.messages = Number(event.target.value)
+        this.state.privacy.messages = event.target.value
       else if(event.target.name === 'category_lists') {
-        this.state.content.category_lists = Number(event.target.value)
+        this.state.content.category_lists = event.target.value
       }
     }
 
     render() {
-      console.log(this.state.content.category_lists)
+
+      const preferences = {
+          language:
+          {
+                name: 'language',
+                type: 'select',
+                options: [
+                    {
+                        name: "English",
+                        value: "en"
+                    },
+                    {
+                        name: "한국어",
+                        value: "ko"
+                    },
+                    {
+                        name: "日本語",
+                        value: "jp"
+                    },
+                    {
+                        name: "简体中文",
+                        value: "zh-cn"
+                    }
+                  ]
+          },
+          time_zone:
+          {
+                name: 'time_zone',
+                type: 'select',
+                options: [
+                    {
+                        name: "(UTC-07:00) America/Los_Angeles",
+                        value: "America/Los_Angeles"
+                    },
+                    {
+                        name: "(UTC+09:00) Asia/Seoul",
+                        value: "Asia/Seoul"
+                    },
+                    {
+                        name: "(UTC+09:00) Asia/Tokyo",
+                        value: "Asia/Tokyo"
+                    },
+                    {
+                        name: "(UTC+06:30) Indian/Cocos",
+                        value: "Indian/Cocos"
+                    }
+                ]
+          },
+          currency:
+          {
+                name: 'currency',
+                type: 'select',
+                options: [
+                    {
+                        name: "Euros (€)",
+                        value: "EUR"
+                    },
+                    {
+                        name: "U.S. dollars ($)",
+                        value: "USD"
+                    },
+                    {
+                        name: "South Korean won (₩)",
+                        value: "KRW"
+                    },
+                    {
+                        name: "Japanese yen (¥)",
+                        value: "JPY"
+                    }
+                ]
+          },
+          profile_visibility:
+          {
+                name: 'profile_visibility',
+                type: 'radio',
+                options: [
+                    {
+                        name: 'Everyone',
+                        value: 'everyone',
+                    },
+                    {
+                        name: 'Private',
+                        value: 'private',
+                        icon: 'lock'
+                    }
+                ]
+          },
+          messages:
+          {
+                name: 'messages',
+                type: 'radio',
+                options: [
+                    {
+                        name: 'Everyone',
+                        value: 'everyone'
+                    },
+                    {
+                        name: 'People you follow',
+                        value: 'people'
+                    },
+                    {
+                        name: 'No one',
+                        value: 'noone',
+                        icon: 'lock'
+                    }
+                ]
+            },
+            category_lists:
+            {
+                  name: 'category_lists',
+                  type: 'radio',
+                  options: [
+                      {
+                          name: 'Enable',
+                          value: 'enable'
+                      },
+                      {
+                          name: 'Disable',
+                          value: 'disable'
+                      }
+                  ]
+              }
+        }
+
         return (
             <div>
               <div className="content main">
@@ -117,31 +248,14 @@ class Preferences extends React.Component {
                      <div className="col s6">
                         <p />
                         <div className="content-font-bold">Language</div>
-                        <select className="browser-default" name="languange" defaultValue={this.state.localization.language} onChange={this.handleChange}>
-                          <option value="eng" selected={this.state.localization.language === "eng"}>English</option>
-                          <option value="ko" selected={this.state.localization.language === "ko"}>한국어</option>
-                          <option value="jp" selected={this.state.localization.language === "jp"}>日本語</option>
-                          <option value="zh-cn" selected={this.state.localization.language === "zh-cn"}>简体中文</option>
-                        </select>
+                        <Item items={preferences.language} selectedItem={this.state.localization.language} onUpdate={this.handleChange}/>
                         <div className="content-font">Interested in helping translate Fancy?<a href=""> Let us know.</a></div>
                         <p />
                         <div className="content-font-bold">Time zone</div>
-                        <select className="browser-default" name="time_zone" defaultValue={this.state.localization.time_zone} onChange={this.handleChange}>
-                          <option value="America/Los_Angeles" selected={this.state.localization.time_zone === "America/Los_Angeles"}>(UTC-07:00) America/Los_Angeles</option>
-                          <option value="Asia/Seoul" selected={this.state.localization.time_zone === "Asia/Seoul"}>(UTC+09:00) Asia/Seoul</option>
-                          <option value="Asia/Tokyo" selected={this.state.localization.time_zone === "Asia/Tokyo"}>(UTC+09:00) Asia/Tokyo</option>
-                          <option value="Indian/Cocos" selected={this.state.localization.time_zone === "Indian/Cocos"}>(UTC+06:30) Indian/Cocos</option>
-                        </select>
+                        <Item items={preferences.time_zone} selectedItem={this.state.localization.time_zone} onUpdate={this.handleChange}/>
                         <p />
-
                         <div className="content-font-bold">Currency</div>
-                        <select className="browser-default" name="currency" defaultValue={this.state.localization.currency} onChange={this.handleChange}>
-                          <option value="EUR" selected={this.state.localization.currency === "EUR"}>Euros (€)</option>
-                          <option value="USD" selected={this.state.localization.currency === "USD"}>U.S. dollars ($)</option>
-                          <option value="KRW" selected={this.state.localization.currency === "KRW"}>South Korean won (₩)</option>
-                          <option value="JPY" selected={this.state.localization.currency === "JPY"}>Japanese yen (¥)</option>
-                        </select>
-
+                        <Item items={preferences.currency} selectedItem={this.state.localization.currency} onUpdate={this.handleChange}/>
                      </div>
                      <div className="col s3">
                        <p/>
@@ -161,36 +275,13 @@ class Preferences extends React.Component {
                         <div className="content-font">Manage who can see your activity, things you fancy, your followers, people you follow or in anyone’s search results.</div>
 
                         <p/>
-                        <div className="row" onClick={this.handleChange}>
-                            <div className="col s3">
-                              <input className="with-gap" name="profile_visibility" type="radio" id="profile_visibility_everyone" value="0" defaultChecked={this.state.privacy.profile_visibility === 0} />
-                              <label htmlFor="profile_visibility_everyone" className="content-font-radio">Everyone</label>
-                            </div>
-
-                            <div className="col s9">
-                              <input className="with-gap" name="profile_visibility" type="radio" id="profile_visibility_private" value="1" defaultChecked={this.state.privacy.profile_visibility === 1} />
-                              <label htmlFor="profile_visibility_private" className="content-font-radio"><i className="material-icons md-dark">lock</i> Private</label>
-                            </div>
-                        </div>
+                        <Item items={preferences.profile_visibility} selectedItem={this.state.privacy.profile_visibility} onUpdate={this.handleChange}/>
                         <p/>
 
                         <div className="content-font-bold">Messages</div>
                         <div className="content-font">Control who can send you messages.</div>
                         <p/>
-                        <div className="row" onClick={this.handleChange}>
-                            <div className="col s3">
-                              <input className="with-gap" name="messages" type="radio" id="messages_everyone" value='0' defaultChecked={this.state.privacy.messages === 0} />
-                              <label htmlFor="messages_everyone" className="content-font-radio">Everyone</label>
-                            </div>
-                            <div className="col s4">
-                              <input className="with-gap" name="messages" type="radio" id="messages_people" value='1' defaultChecked={this.state.privacy.messages === 1} />
-                              <label htmlFor="messages_people" className="content-font-radio">People you follow</label>
-                            </div>
-                            <div className="col s5">
-                              <input className="with-gap" name="messages" type="radio" id="messages_nobody" value='2'  defaultChecked={this.state.privacy.messages === 2} />
-                              <label htmlFor="messages_nobody" className="content-font-radio"><i className="material-icons md-dark">lock</i>No one</label>
-                            </div>
-                        </div>
+                        <Item items={preferences.messages} selectedItem={this.state.privacy.messages} onUpdate={this.handleChange}/>
                         <p/><p/><p/>
                         <div className="content-font-bold">Recently viewed</div>
                         <div className="content-font">Manage your Fancy browsing history.</div>
@@ -209,16 +300,7 @@ class Preferences extends React.Component {
                         <div className="content-font-bold">Category lists</div>
                         <div className="content-font">Automatically add Fancy items to the Category list</div>
                         <p/>
-                        <div className="row" onClick={this.handleChange}>
-                            <div className="col s3">
-                              <input className="with-gap" name="category_lists" type="radio" id="category_lists_enable" value="1" defaultChecked={this.state.content.category_lists === 1} />
-                              <label htmlFor="category_lists_enable" className="content-font-radio">Enable</label>
-                            </div>
-                            <div className="col s9">
-                              <input className="with-gap" name="category_lists" type="radio" id="category_lists_disable" value="0" defaultChecked={this.state.content.category_lists === 0} />
-                              <label htmlFor="category_lists_disable" className="content-font-radio">Disable</label>
-                            </div>
-                        </div>
+                        <Item items={preferences.category_lists} selectedItem={this.state.content.category_lists} onUpdate={this.handleChange}/>
                       </div>
                  </div>
               </div>

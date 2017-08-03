@@ -43,7 +43,7 @@ router.post('/', async function(req, res, next) {
 /* Update user preferences. */
 router.put('/', async function(req, res, next) {
     if(typeof req.session.sess_id === 'undefined')
-      return res.status(403).json({error: "not logged in"})
+      return res.status(403).json({error: "user not logged in"})
 
     var user = await User.findOne({_id: req.session.sess_id})
     if (!user) return res.status(404).json({error: 'user not found'})
@@ -56,7 +56,7 @@ router.put('/', async function(req, res, next) {
 /* Delete user preferences. */
 router.delete('/', async function(req, res, next) {
     if(typeof req.session.sess_id === 'undefined')
-      return res.status(403).json({error: "not logged in"})
+      return res.status(403).json({error: "user not logged in"})
 
     var user = await User.findOne({_id: req.session.sess_id})
     if (!user) return res.status(404).json({error: 'user not found'})

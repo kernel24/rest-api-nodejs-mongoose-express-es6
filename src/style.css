@@ -21,9 +21,9 @@ body {
   font-size: 36px;
   font-family: 'NTR', sans-serif;
   font-style: normal;
-  font-weight: italic;
+  font-weight: bold;
   text-align: center;
-  color: rgba(0, 0, 0, 0.77) !important;
+  color: rgba(0, 0, 0, 0.66) !important;
   padding: 10px 0px 0px 0px;
 }
 
@@ -85,7 +85,7 @@ body {
   font-style: normal;
   font-weight: italic;
   text-align: left;
-  color: rgba(0, 0, 0, 0.26);
+  color: rgba(0, 0, 0, 0.33);
 }
 
 .content-font-bold {
@@ -101,11 +101,11 @@ body {
   font-style: normal;
   font-weight: bold;
   text-align: left;
-  color: rgba(0, 0, 0, 0.77);
+  color: rgba(0, 0, 0, 0.66);
 }
 
 .content-font-radio {
-  font-size: 11px;
+  font-size: 9px;
   font-family: 'Quicksand', sans-serif;
   font-style: normal;
   font-weight: italic;
