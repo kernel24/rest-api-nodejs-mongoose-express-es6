@@ -5,7 +5,7 @@ import Item from './Item'
 import 'babel-polyfill'
 
 const API_URL = 'http://localhost:8080/'
-const USERID = 4
+const USERID = 1
 
 class Preferences extends React.Component {
   constructor() {

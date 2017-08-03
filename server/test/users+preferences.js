@@ -149,6 +149,8 @@ describe('GET /preferences/', () => {
   })
 })
 
+// Comment: for install, this test will be executed after chkecking all the feature
+/*
 describe('DELETE /preferences/', () => {
   it('should respond with removing preferences about user', (done) => {
     var req = request(app).delete('/preferences/')
@@ -182,3 +184,4 @@ describe('DELETE /users', () => {
       })
   })
 })
+*/
